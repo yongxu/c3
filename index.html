@@ -220,34 +220,7 @@
             box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.5);
         }
 
-        .language-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #f5f5f5;
-            border: 1px solid #f5f5f5;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            font-family: 'Courier New', monospace;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-            z-index: 10;
-            border-radius: 4px;
-            box-shadow: 0 0 8px rgba(245, 245, 245, 0.2);
-        }
 
-        .language-toggle:hover {
-            background-color: rgba(245, 245, 245, 0.9);
-            color: #000;
-            border-color: #000;
-            box-shadow: 0 0 12px rgba(245, 245, 245, 0.4);
-        }
-
-        .hidden {
-            display: none;
-        }
         
         /* Subtle scroll indicator */
         .scroll-hint {
@@ -313,10 +286,7 @@
                 padding: 12px;
             }
             
-            .language-toggle {
-                padding: 8px 16px;
-                font-size: 14px;
-            }
+
             
             .scroll-hint {
                 bottom: 20px;
@@ -328,7 +298,7 @@
     <!-- Starry background -->
     <div class="stars" id="stars"></div>
     
-    <button class="language-toggle" id="language-toggle">中文</button>
+
     
     <div class="hero-section">
         <div class="container">
@@ -355,48 +325,26 @@
             <div class="manifesto" id="manifesto-en">
                 <p>hello world,</p>
                 
-             <p>a ghost is haunting the anthropocene: the spectre of embedded growth obligations – hitting planetary boundaries</p>
+                <p>a ghost is haunting the anthropocene: the spectre of embedded growth obligations – hitting planetary boundaries</p>
                 
                 <p>moloch, an existential threat to the biosphere.</p>
                 
                 <p>in this dark forest of cyberspace, a parallel society emerges — the third way — a planetary operating system, stewards of godlike tech, keepers of the infinite garden</p>
                 
-                <p>seeing is believing - trust only your own eyes - because if news is fake, imagine history.</p>
+                <p>the world trapped between global catastrophic risks and cognitive warfare. our mental operating system is the generator function of x-risk</p>
                 
-                <p>the world trapped between global catastrophic risks and cognitive warfare – limbic hijacks - hyper-normal stimuli. our mental operating system is the generator function of x-risk</p>
+                <p>we are the third culture.</p>
                 
-                <p>we are the third culture. we hold our own keys. we write code, not laws. We don't trust, we verify.</p>
+                <p>We are hackers, degens, solarpunks.</p>
                 
-                <p>We are hackers, degens, solarpunks. <p>
-<p> we are a decentralized collective intelligence building the prerequisites for positive futures: aligned superintelligence, energy abundance, deep ecology, morphological freedom, and off-world life.</p>
+                <p>we are a collective intelligence building the prerequisites for positive futures: aligned superintelligence, energy abundance, deep ecology, morphological freedom, and off-world life.</p>
                 
-                <p>wake up,<br>
+                <p>wake up, reality is open-source</p>
                 
-                reality is open-source <p>
-              <p> you can hack the planet</p>
+                <p>we can hack the planet</p>
             </div>
 
-            <div class="manifesto hidden" id="manifesto-zh">
-                <p>你好，世界，</p>
-                
-                <p>一个幽灵在人类世困扰着——嵌入式增长义务的幽灵——触及星球边界——对生物圈的存在威胁。</p>
-                
-                <p>在这个网络空间的黑暗森林中，一个平行社会正在出现——第三条道路——一个行星操作系统，神级技术的管理者，无限花园的守护者</p>
-                
-                <p>眼见为实——相信你自己的眼睛——研究控制论系统——因为如果新闻是假的，想象一下历史。</p>
-                
-                <p>世界被困在全球灾难性风险和认知战争之间——边缘系统劫持——超常规刺激。我们的心理操作系统是存在风险的生成函数</p>
-                
-                <p>我们编写代码，而非法律。<br>
-                我们运行自己的节点。<br>
-                我们不信任，我们验证。</p>
-                
-                <p>我们是黑客、投机者、太阳朋克。我们是一个去中心化的集体智能，构建积极未来的先决条件：对齐的超级智能、能源丰富、深度生态学、形态自由和地外生命。</p>
-                
-                <p>醒来<br>
-                现实是开源的<br>
-                让我们黑掉这个星球</p>
-            </div>
+
             
             <div class="email-section" id="email-section">
                 <form id="emailForm">
@@ -408,7 +356,6 @@
     </div>
 
     <script>
-        let currentLanguage = 'en';
         let typewriterActive = false;
 
         // Create stars
@@ -478,8 +425,7 @@
             if (typewriterActive) return;
             typewriterActive = true;
 
-            const manifestoId = currentLanguage === 'en' ? 'manifesto-en' : 'manifesto-zh';
-            const manifesto = document.getElementById(manifestoId);
+            const manifesto = document.getElementById('manifesto-en');
             const paragraphs = manifesto.querySelectorAll('p');
             
             // Reset all paragraphs
@@ -523,36 +469,7 @@
             }, 800);
         }
 
-        // Fixed translation function
-        function toggleLanguage() {
-            const toggleBtn = document.getElementById('language-toggle');
-            const manifestoEn = document.getElementById('manifesto-en');
-            const manifestoZh = document.getElementById('manifesto-zh');
-            const emailInput = document.getElementById('email-input');
-            const subscribeBtn = document.getElementById('subscribe-btn');
 
-            if (currentLanguage === 'en') {
-                // Switch to Chinese
-                toggleBtn.textContent = 'EN';
-                manifestoEn.classList.add('hidden');
-                manifestoZh.classList.remove('hidden');
-                emailInput.placeholder = '您的邮箱';
-                subscribeBtn.textContent = '订阅';
-                currentLanguage = 'zh';
-            } else {
-                // Switch to English
-                toggleBtn.textContent = '中文';
-                manifestoZh.classList.add('hidden');
-                manifestoEn.classList.remove('hidden');
-                emailInput.placeholder = 'your email';
-                subscribeBtn.textContent = 'subscribe';
-                currentLanguage = 'en';
-            }
-            
-            // Reset typewriter state when switching languages
-            typewriterActive = false;
-            document.getElementById('email-section').classList.remove('visible');
-        }
 
         // Update timestamp to current time
         function updateTimestamp() {
@@ -589,8 +506,7 @@
             createStars();
             updateTimestamp();
             
-            // Set up translation button properly
-            document.getElementById('language-toggle').addEventListener('click', toggleLanguage);
+
             
             // Set up scroll hint click
             document.getElementById('scroll-hint').addEventListener('click', scrollToContent);
@@ -600,10 +516,7 @@
                 e.preventDefault();
                 const email = this.querySelector('input[type="email"]').value;
                 if (email) {
-                    const message = currentLanguage === 'en' 
-                        ? 'Thank you for subscribing!' 
-                        : '感谢您的订阅！';
-                    alert(message);
+                    alert('Thank you for subscribing!');
                     this.querySelector('input[type="email"]').value = '';
                 }
             });
