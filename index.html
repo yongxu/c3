@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Culture 3.0</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #f5f5f5;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+
+        /* Starry sky background */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        .star:nth-child(odd) {
+            animation-delay: 0.5s;
+        }
+
+        .star:nth-child(3n) {
+            animation-delay: 1s;
+        }
+
+        .star:nth-child(4n) {
+            animation-delay: 1.5s;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            color: #f5f5f5;
+            display: inline-block;
+            font-size: 2rem; 
+            font-weight: bold;
+            font-family: Arial, sans-serif;
+            margin-bottom: 10px; 
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.5), 0 0 45px rgba(255, 255, 255, 0.3);
+        }
+
+        .brand-logo {
+            display: block;
+            margin: 40px auto 20px;
+            max-width: 300px;
+            height: auto;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.6));
+        }
+
+        .timestamp {
+            font-size: 1.8rem;
+            margin-bottom: 40px;
+            color: #ccc;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(204, 204, 204, 0.5);
+        }
+
+        .status-message {
+            font-size: 1.6rem;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            text-shadow: 0 0 8px rgba(245, 245, 245, 0.4);
+        }
+
+        .status-message p {
+            margin-bottom: 30px;
+        }
+
+        .manifesto {
+            font-size: 1.6rem;
+            margin-bottom: 40px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+            text-align: left;
+            padding: 30px;
+            text-shadow: 0 0 8px rgba(245, 245, 245, 0.3);
+        }
+
+        .manifesto p {
+            margin-bottom: 20px;
+            opacity: 0;
+        }
+
+        /* Typewriter effect */
+        .typewriter {
+            display: inline;
+            border-right: 2px solid #f5f5f5;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { border-color: #f5f5f5; }
+            51%, 100% { border-color: transparent; }
+        }
+
+        .manifesto p.typing {
+            opacity: 1;
+        }
+
+        .manifesto p.typed {
+            opacity: 1;
+        }
+
+        .manifesto p.typed .typewriter {
+            border-right: none;
+            animation: none;
+        }
+
+        .email-section {
+            margin-top: 60px;
+            padding: 30px;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .email-section.visible {
+            opacity: 1;
+        }
+
+        .email-input {
+            width: 100%;
+            max-width: 600px;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #f5f5f5;
+            background-color: rgba(51, 51, 51, 0.8);
+            color: #f5f5f5;
+            margin-bottom: 20px;
+            font-family: 'Courier New', monospace;
+            backdrop-filter: blur(5px);
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(245, 245, 245, 0.2);
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #aaa;
+            box-shadow: 0 0 15px rgba(245, 245, 245, 0.4);
+        }
+
+        .subscribe-btn {
+            background-color: #f5f5f5;
+            color: #333;
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            text-transform: lowercase;
+            transition: all 0.3s ease;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(245, 245, 245, 0.3);
+        }
+
+        .subscribe-btn:hover {
+            background-color: #ccc;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3), 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #f5f5f5;
+            border: 1px solid #f5f5f5;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            z-index: 10;
+            border-radius: 4px;
+            box-shadow: 0 0 8px rgba(245, 245, 245, 0.2);
+        }
+
+        .language-toggle:hover {
+            background-color: rgba(245, 245, 245, 0.9);
+            color: #000;
+            border-color: #000;
+            box-shadow: 0 0 12px rgba(245, 245, 245, 0.4);
+        }
+
+        .hidden {
+            display: none;
+        }
+        
+        /* Subtle scroll indicator */
+        .scroll-hint {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            opacity: 0.7;
+            z-index: 10;
+            cursor: pointer;
+        }
+        
+        .scroll-hint svg {
+            width: 30px;
+            height: 30px;
+            fill: rgba(255, 255, 255, 0.7);
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3));
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+        
+        .content-section {
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+            
+            .brand-logo {
+                max-width: 200px;
+            }
+            
+            .timestamp {
+                font-size: 1.2rem;
+            }
+            
+            .status-message {
+                font-size: 1.1rem;
+            }
+
+            .manifesto {
+                font-size: 1.1rem;
+                padding: 20px;
+            }
+            
+            .email-input {
+                font-size: 15px;
+                padding: 12px;
+            }
+            
+            .language-toggle {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            
+            .scroll-hint {
+                bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Starry background -->
+    <div class="stars" id="stars"></div>
+    
+    <button class="language-toggle" id="language-toggle">中文</button>
+    
+    <div class="hero-section">
+        <div class="container">
+            <div class="logo">Culture 3.0</div>
+            
+            <div class="timestamp" id="timestamp">
+                07/27/2025 05:02pm TYO
+            </div>
+            
+            <!-- Logo moved here and made larger -->
+            <img src="flowers.png" alt="RBC Logo" class="brand-logo">
+        </div>
+        
+        <!-- Subtle scroll indicator -->
+        <div class="scroll-hint" id="scroll-hint">
+            <svg viewBox="0 0 24 24">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/>
+            </svg>
+        </div>
+    </div>
+    
+    <div class="content-section" id="content-section">
+        <div class="container">
+            <div class="manifesto" id="manifesto-en">
+                <p>hello world,</p>
+                
+             <p>a ghost is haunting the anthropocene: the spectre of embedded growth obligations – hitting planetary boundaries</p>
+                
+                <p>moloch, an existential threat to the biosphere.</p>
+                
+                <p>in this dark forest of cyberspace, a parallel society emerges — the third way — a planetary operating system, stewards of godlike tech, keepers of the infinite garden</p>
+                
+                <p>seeing is believing - trust only your own eyes - because if news is fake, imagine history.</p>
+                
+                <p>the world trapped between global catastrophic risks and cognitive warfare – limbic hijacks - hyper-normal stimuli. our mental operating system is the generator function of x-risk</p>
+                
+                <p>we are the third culture. we hold our own keys. we write code, not laws. We don't trust, we verify.</p>
+                
+                <p>We are hackers, degens, solarpunks. <p>
+<p> we are a decentralized collective intelligence building the prerequisites for positive futures: aligned superintelligence, energy abundance, deep ecology, morphological freedom, and off-world life.</p>
+                
+                <p>wake up,<br>
+                
+                reality is open-source <p>
+              <p> you can hack the planet</p>
+            </div>
+
+            <div class="manifesto hidden" id="manifesto-zh">
+                <p>你好，世界，</p>
+                
+                <p>一个幽灵在人类世困扰着——嵌入式增长义务的幽灵——触及星球边界——对生物圈的存在威胁。</p>
+                
+                <p>在这个网络空间的黑暗森林中，一个平行社会正在出现——第三条道路——一个行星操作系统，神级技术的管理者，无限花园的守护者</p>
+                
+                <p>眼见为实——相信你自己的眼睛——研究控制论系统——因为如果新闻是假的，想象一下历史。</p>
+                
+                <p>世界被困在全球灾难性风险和认知战争之间——边缘系统劫持——超常规刺激。我们的心理操作系统是存在风险的生成函数</p>
+                
+                <p>我们编写代码，而非法律。<br>
+                我们运行自己的节点。<br>
+                我们不信任，我们验证。</p>
+                
+                <p>我们是黑客、投机者、太阳朋克。我们是一个去中心化的集体智能，构建积极未来的先决条件：对齐的超级智能、能源丰富、深度生态学、形态自由和地外生命。</p>
+                
+                <p>醒来<br>
+                现实是开源的<br>
+                让我们黑掉这个星球</p>
+            </div>
+            
+            <div class="email-section" id="email-section">
+                <form id="emailForm">
+                    <input type="email" class="email-input" id="email-input" placeholder="your email" required>
+                    <button type="submit" class="subscribe-btn" id="subscribe-btn">subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentLanguage = 'en';
+        let typewriterActive = false;
+
+        // Create stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const numStars = 200;
+            
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // Random position
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                
+                // Random size (1-3px)
+                const size = Math.random() * 2 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                
+                // Random animation duration
+                star.style.animationDuration = (Math.random() * 3 + 1) + 's';
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Typewriter effect function with variable speed
+        async function typeWriter(element, text, baseSpeed = 60) {
+            element.innerHTML = '';
+            const typewriterSpan = document.createElement('span');
+            typewriterSpan.className = 'typewriter';
+            element.appendChild(typewriterSpan);
+            
+            for (let i = 0; i < text.length; i++) {
+                const char = text.charAt(i);
+                typewriterSpan.textContent += char;
+                
+                // Variable speed based on character type
+                let delay = baseSpeed;
+                
+                // Slower for punctuation
+                if (['.', ',', '!', '?', ':', ';', '—', '–'].includes(char)) {
+                    delay = baseSpeed * 2.5;
+                }
+                // Slightly slower for spaces (natural pause)
+                else if (char === ' ') {
+                    delay = baseSpeed * 1.2;
+                }
+                // Faster for common characters
+                else if (['e', 'a', 'i', 'o', 'u', 'n', 'r', 's', 't'].includes(char.toLowerCase())) {
+                    delay = baseSpeed * 0.8;
+                }
+                // Add slight randomness (±20%)
+                delay = delay * (0.8 + Math.random() * 0.4);
+                
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+            
+            // Remove cursor after typing is complete
+            typewriterSpan.classList.remove('typewriter');
+            element.innerHTML = text;
+        }
+
+        // Start typewriter effect for manifesto
+        async function startTypewriterEffect() {
+            if (typewriterActive) return;
+            typewriterActive = true;
+
+            const manifestoId = currentLanguage === 'en' ? 'manifesto-en' : 'manifesto-zh';
+            const manifesto = document.getElementById(manifestoId);
+            const paragraphs = manifesto.querySelectorAll('p');
+            
+            // Reset all paragraphs
+            paragraphs.forEach(p => {
+                p.classList.remove('typing', 'typed');
+                p.style.opacity = '0';
+            });
+
+            for (let i = 0; i < paragraphs.length; i++) {
+                const p = paragraphs[i];
+                const originalText = p.textContent;
+                
+                p.style.opacity = '1';
+                p.classList.add('typing');
+                
+                // Typewriter speed: 60ms base with variations for realism
+                await typeWriter(p, originalText, 60);
+                
+                p.classList.remove('typing');
+                p.classList.add('typed');
+                
+                // Small pause between paragraphs
+                await new Promise(resolve => setTimeout(resolve, 200));
+            }
+
+            // Show email section after all text is typed
+            document.getElementById('email-section').classList.add('visible');
+        }
+
+        // Smooth scroll to content section
+        function scrollToContent() {
+            const contentSection = document.getElementById('content-section');
+            contentSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+            
+            // Start typewriter effect after scroll animation
+            setTimeout(() => {
+                startTypewriterEffect();
+            }, 800);
+        }
+
+        // Fixed translation function
+        function toggleLanguage() {
+            const toggleBtn = document.getElementById('language-toggle');
+            const manifestoEn = document.getElementById('manifesto-en');
+            const manifestoZh = document.getElementById('manifesto-zh');
+            const emailInput = document.getElementById('email-input');
+            const subscribeBtn = document.getElementById('subscribe-btn');
+
+            if (currentLanguage === 'en') {
+                // Switch to Chinese
+                toggleBtn.textContent = 'EN';
+                manifestoEn.classList.add('hidden');
+                manifestoZh.classList.remove('hidden');
+                emailInput.placeholder = '您的邮箱';
+                subscribeBtn.textContent = '订阅';
+                currentLanguage = 'zh';
+            } else {
+                // Switch to English
+                toggleBtn.textContent = '中文';
+                manifestoZh.classList.add('hidden');
+                manifestoEn.classList.remove('hidden');
+                emailInput.placeholder = 'your email';
+                subscribeBtn.textContent = 'subscribe';
+                currentLanguage = 'en';
+            }
+            
+            // Reset typewriter state when switching languages
+            typewriterActive = false;
+            document.getElementById('email-section').classList.remove('visible');
+        }
+
+        // Update timestamp to current time
+        function updateTimestamp() {
+            const now = new Date();
+            const options = {
+                timeZone: 'Asia/Tokyo',
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: true
+            };
+            const timestamp = now.toLocaleDateString('en-US', options)
+                .replace(/(\d+)\/(\d+)\/(\d+),\s(.+)/, '$3/$1/$2 $4')
+                .replace('AM', 'am')
+                .replace('PM', 'pm') + ' TYO';
+            document.getElementById('timestamp').textContent = timestamp;
+        }
+
+        // Handle scroll detection
+        function handleScroll() {
+            const contentSection = document.getElementById('content-section');
+            const rect = contentSection.getBoundingClientRect();
+            
+            // If content section is in view and typewriter hasn't started
+            if (rect.top <= window.innerHeight * 0.5 && !typewriterActive) {
+                startTypewriterEffect();
+            }
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            createStars();
+            updateTimestamp();
+            
+            // Set up translation button properly
+            document.getElementById('language-toggle').addEventListener('click', toggleLanguage);
+            
+            // Set up scroll hint click
+            document.getElementById('scroll-hint').addEventListener('click', scrollToContent);
+            
+            // Set up form submission
+            document.getElementById('emailForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.querySelector('input[type="email"]').value;
+                if (email) {
+                    const message = currentLanguage === 'en' 
+                        ? 'Thank you for subscribing!' 
+                        : '感谢您的订阅！';
+                    alert(message);
+                    this.querySelector('input[type="email"]').value = '';
+                }
+            });
+            
+            // Add scroll event listener for automatic trigger
+            window.addEventListener('scroll', handleScroll);
+        });
+    </script>
+</body>
+</html>
